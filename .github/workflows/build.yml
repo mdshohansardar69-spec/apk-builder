@@ -1,0 +1,70 @@
+name: Build APK
+on: workflow_dispatch
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - name: Build APK
+        id: build
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          exec > >(tee "$GITHUB_WORKSPACE/build.log") 2>&1
+          set -e
+          C=payload/config.json
+          test -f payload/www/index.html || { echo "ERROR: payload/www/index.html missing"; exit 1; }
+          PKG=$(jq -r .package $C); VER=$(jq -r .versionName $C); NAME=$(jq -r .name $C)
+          npm i -g cordova@12
+          cordova create app "$PKG" "$NAME"
+          cd app
+          rm -rf www && cp -r ../payload/www www
+          mkdir -p res && cp ../payload/icon.png res/icon.png 2>/dev/null || true
+          cat > gen.js <<'EOF'
+          const fs=require('fs');const c=require('../payload/config.json');
+          const e=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
+          const perms=(c.permissions||[]).map(p=>'<config-file target="AndroidManifest.xml" parent="/manifest"><uses-permission android:name="'+e(p)+'"/></config-file>').join('');
+          const icon=fs.existsSync('res/icon.png')?'<icon src="res/icon.png"/>':'';
+          fs.writeFileSync('config.xml',`<?xml version='1.0' encoding='utf-8'?>
+          <widget id="${e(c.package)}" version="${e(c.versionName)}" android-versionCode="${c.versionCode}" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android">
+          <name>${e(c.name)}</name><author>${e(c.developer)}</author>
+          <content src="index.html"/><access origin="*"/><allow-navigation href="*"/><allow-intent href="*"/>
+          <preference name="Orientation" value="${c.orientation==='auto'?'default':c.orientation}"/>
+          <preference name="android-minSdkVersion" value="${c.minSdk}"/>
+          <platform name="android">${icon}${perms}</platform></widget>`);
+          EOF
+          node gen.js
+          cordova platform add android@13
+          cordova build android --debug
+          cp platforms/android/app/build/outputs/apk/debug/app-debug.apk "../$PKG-$VER.apk"
+          cd ..
+          TAG="build-$GITHUB_RUN_NUMBER"
+          gh release create "$TAG" "$PKG-$VER.apk" --title "$NAME v$VER" --notes "Built by APK Builder Studio"
+          echo "apk=https://github.com/$GITHUB_REPOSITORY/releases/download/$TAG/$PKG-$VER.apk" >> "$GITHUB_OUTPUT"
+      - name: Publish status
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          STATUS: ${{ steps.build.outcome }}
+          APK: ${{ steps.build.outputs.apk }}
+        run: |
+          sleep 2
+          jq -n --arg s "$STATUS" --arg a "$APK" --arg r "$GITHUB_RUN_ID" --argjson t "$(date +%s)" --arg l "$(tail -n 60 build.log 2>/dev/null)" '{status:$s,apk:$a,run:$r,time:$t,log:$l}' > status.json
+          mkdir st && cp status.json st/ && cd st
+          git init -q -b build-status
+          git config user.name actions && git config user.email actions@github.com
+          git add . && git commit -qm status
+          git push -f "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}" build-status
+      - name: Fail if build failed
+        if: steps.build.outcome == 'failure'
+        run: exit 1
