@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Admin GW E-SPORT</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+:root{--bg:#fbf5ff;--ink:#2b3a67;--muted:#8a82a8;--line:#ece4fb;--sky1:#4fc3f7;--sky2:#4a5f8f;--or1:#ffa726;--or2:#ef6c00;--pur:#7c4dff;--ok:#2e9d4f;--bad:#e53935;--card:#fff;--shadow:0 6px 18px rgba(80,60,140,.09);
+ --primary:#7c4dff;--danger:#e53935;--success:#2e9d4f;--warning:#ef6c00;--info:#42a5f5;--text-muted:#8a82a8;--text-main:#2b3a67;--border:#ece4fb;--input-bg:#f7f3ff}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Plus Jakarta Sans','Hind Siliguri',sans-serif;-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--ink);padding-bottom:90px;min-height:100vh;-webkit-user-select:none;user-select:none}
+input,textarea,select,.sel{-webkit-user-select:text;user-select:text}
+.admin-header{background:linear-gradient(135deg,var(--sky1),var(--sky2));color:#fff;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;border-radius:0 0 22px 22px;box-shadow:0 8px 22px rgba(74,95,143,.3)}
+.admin-logo{font-weight:800;font-size:19px;display:flex;align-items:center;gap:10px}
+.admin-logo small{display:block;font-size:10px;font-weight:600;opacity:.85;letter-spacing:1px}
+.logo-dot{width:12px;height:12px;background:var(--or1);border-radius:50%;box-shadow:0 0 0 4px rgba(255,167,38,.3)}
+.logout-btn{width:40px;height:40px;border-radius:13px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;cursor:pointer;color:#fff}
+.section{display:none;padding:18px 16px;animation:slideUp .35s ease}
+.section.active{display:block}
+@keyframes slideUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.hero{display:flex;justify-content:space-between;align-items:center;background:linear-gradient(135deg,var(--sky1),var(--sky2));color:#fff;border-radius:24px;padding:24px;margin-bottom:16px;position:relative;overflow:hidden;box-shadow:0 12px 26px rgba(74,95,143,.3)}
+.hero::before{content:"";position:absolute;width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,.1);top:-60px;right:-40px}
+.hero::after{content:"";position:absolute;width:90px;height:90px;border-radius:50%;background:rgba(255,167,38,.3);bottom:-34px;left:30%}
+.hero>*{position:relative;z-index:2}
+.hero-lbl{font-size:13px;font-weight:700;opacity:.9}
+.hero-val{font-size:40px;font-weight:800;line-height:1.1;margin-top:4px}
+.hero-side{background:rgba(255,255,255,.2);border-radius:16px;padding:10px 14px;text-align:center}
+.hero-side span{display:block;font-size:20px;font-weight:800}
+.hero-side small{font-size:10px;font-weight:700;opacity:.9}
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.kpi{background:var(--card);border-radius:18px;padding:14px;box-shadow:var(--shadow);display:flex;align-items:center;gap:12px}
+.kpi-ic{flex:0 0 42px;height:42px;border-radius:13px;background:linear-gradient(135deg,var(--c1),var(--c2));color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px}
+.kpi b{display:block;font-size:18px;font-weight:800;color:var(--ink)}
+.kpi span{font-size:11px;font-weight:700;color:var(--muted)}
+.chart-card{background:var(--card);border-radius:22px;padding:16px;box-shadow:var(--shadow);margin-bottom:16px}
+.chart-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:8px;flex-wrap:wrap}
+.chart-head h4{font-size:15px;font-weight:800;color:var(--ink);display:flex;align-items:center;gap:8px}
+.chart-head h4 i{color:var(--pur)}
+.rng{display:flex;background:#f3edff;border-radius:12px;padding:3px}
+.rng button{border:none;background:none;padding:6px 12px;border-radius:10px;font-weight:800;font-size:11px;color:var(--muted);cursor:pointer}
+.rng button.on{background:linear-gradient(135deg,var(--sky1),var(--sky2));color:#fff}
+.chart-foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-top:8px;font-size:11px;font-weight:700;color:var(--muted)}
+.chart-foot b{color:var(--ink)}
+.lg{display:inline-flex;align-items:center;gap:5px}.lg i{width:10px;height:10px;border-radius:3px;display:inline-block}
+.grid-section-title{font-size:12px;color:var(--muted);font-weight:800;margin:20px 4px 12px;text-transform:uppercase;letter-spacing:1.4px}
+.dash-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.dash-item{background:var(--card);padding:16px 6px;border-radius:20px;text-align:center;box-shadow:var(--shadow);cursor:pointer;transition:.2s}
+.dash-item:active{transform:scale(.95)}
+.dash-icon-box{width:48px;height:48px;border-radius:15px;margin:0 auto 10px;display:flex;align-items:center;justify-content:center;font-size:20px;color:#fff;background:linear-gradient(135deg,var(--c1),var(--c2));box-shadow:0 6px 12px rgba(0,0,0,.12)}
+.dash-text{font-size:12px;font-weight:800;color:var(--ink)}
+.pg-head{display:flex;align-items:center;gap:12px;margin:2px 0 16px}
+.pg-ic{width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,var(--c1,var(--sky1)),var(--c2,var(--sky2)));color:#fff;display:flex;align-items:center;justify-content:center;font-size:19px}
+.pg-head h2{font-size:20px;font-weight:800;color:var(--ink)}
+.pg-head p{font-size:12px;color:var(--muted);font-weight:600}
+.list-container{display:flex;flex-direction:column;gap:14px}
+.flat-card{background:var(--card);padding:16px;border-radius:20px;box-shadow:var(--shadow);position:relative}
+.fc-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;gap:8px}
+.fc-title{font-weight:800;font-size:16px;color:var(--ink)}
+.fc-tag{font-size:10px;padding:4px 10px;border-radius:30px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap}
+.tag-yellow{background:#fff3e0;color:#ef6c00}.tag-green{background:#e8f5e9;color:#2e7d32}.tag-blue{background:#e3f2fd;color:#1e88e5}.tag-red{background:#ffebee;color:#c62828}
+.fc-detail{font-size:13px;color:var(--muted);margin-bottom:7px;display:flex;justify-content:space-between;align-items:center;gap:10px;font-weight:600}
+.fc-value{color:var(--ink);font-weight:800;text-align:right;word-break:break-all}
+.fc-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;padding-top:14px;border-top:1px dashed var(--line)}
+.fc-actions.tri{grid-template-columns:1.4fr 1fr .6fr}
+.cat-card-row{display:flex;align-items:center;gap:14px}
+.cat-img{width:56px;height:56px;border-radius:14px;object-fit:cover;background:var(--input-bg)}
+.cat-info{flex:1;min-width:0}.cat-actions{display:flex;gap:8px}
+.btn{padding:12px;border-radius:13px;border:none;font-size:13px;font-weight:800;cursor:pointer;color:#fff;display:flex;align-items:center;justify-content:center;gap:8px;transition:.2s}
+.btn-primary{background:linear-gradient(135deg,#42a5f5,#5c6bc0);box-shadow:0 6px 14px rgba(92,107,192,.3)}
+.btn-orange{background:linear-gradient(135deg,var(--or1),var(--or2));box-shadow:0 6px 14px rgba(239,108,0,.3)}
+.btn-danger{background:#ffebee;color:#c62828}
+.btn-success{background:#e8f5e9;color:#2e7d32}
+.btn:active{transform:scale(.97)}
+.btn-sm{padding:8px 12px;font-size:12px;border-radius:11px}
+.form-group{margin-bottom:16px}
+.form-label{display:block;font-size:11px;color:var(--muted);margin-bottom:7px;font-weight:800;text-transform:uppercase;letter-spacing:.6px}
+.form-input{width:100%;background:var(--input-bg);border:1.5px solid var(--line);color:var(--ink);padding:13px 14px;border-radius:14px;outline:none;font-size:14px;font-weight:600;transition:.2s}
+.form-input:focus{border-color:var(--pur);background:#fff;box-shadow:0 0 0 4px rgba(124,77,255,.12)}
+.hint{font-size:11px;color:#a69fc2;margin-top:5px;font-weight:600}
+.back-nav{display:inline-flex;align-items:center;gap:8px;color:var(--pur);background:#f1eaff;font-size:13px;font-weight:800;margin-bottom:16px;cursor:pointer;padding:9px 16px;border-radius:20px}
+.fab{position:fixed;bottom:26px;right:22px;width:60px;height:60px;background:linear-gradient(135deg,var(--or1),var(--or2));border-radius:50%;display:flex;justify-content:center;align-items:center;font-size:24px;color:#fff;box-shadow:0 10px 22px rgba(239,108,0,.4);z-index:90;cursor:pointer}
+.search-box{position:relative;margin-bottom:18px}
+.search-box i{position:absolute;left:18px;top:50%;transform:translateY(-50%);color:var(--muted)}
+.search-input{padding-left:46px;border-radius:30px}
+/* settings cards */
+.set-card{background:var(--card);border-radius:22px;box-shadow:var(--shadow);margin-bottom:16px;overflow:hidden}
+.set-head{display:flex;align-items:center;gap:12px;padding:14px 16px;background:linear-gradient(135deg,var(--c1),var(--c2));color:#fff}
+.set-head i{width:36px;height:36px;border-radius:11px;background:rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center;font-size:16px}
+.set-head b{font-size:15px;font-weight:800;display:block}.set-head small{font-size:11px;opacity:.9;font-weight:600}
+.set-body{padding:16px 16px 4px}
+.prev{display:none;width:56px;height:56px;border-radius:14px;object-fit:cover;margin-top:8px;border:2px solid var(--line)}
+.save-bar{position:sticky;bottom:12px;z-index:50}
+.save-bar .btn{width:100%;padding:16px;font-size:15px}
+/* sms */
+.mono{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12px;word-break:break-all;background:#f3edff;color:#4a148c;padding:10px 12px;border-radius:12px;font-weight:700}
+.row-copy{display:flex;gap:8px;align-items:stretch}.row-copy .mono{flex:1}
+.steps{margin:14px 0 6px;font-size:12px;color:var(--muted);font-weight:600;line-height:1.8}
+.steps b{color:var(--ink)}
+.empty{text-align:center;padding:26px;color:var(--muted);font-weight:700;background:var(--card);border-radius:18px;box-shadow:var(--shadow);font-size:13px}
+.pay-row{display:flex;align-items:center;gap:12px;background:var(--card);border-radius:16px;padding:12px;box-shadow:var(--shadow);margin-bottom:10px}
+.pay-amt{font-size:16px;font-weight:800;color:var(--ok);min-width:70px}
+.pay-mid{flex:1;min-width:0;font-size:11px;color:var(--muted);font-weight:700}.pay-mid b{display:block;font-size:13px;color:var(--ink);word-break:break-all}
+/* result popup */
+.rs-head,.rs-row{display:grid;grid-template-columns:1fr 70px 80px;gap:8px;align-items:center;margin-bottom:8px;text-align:left}
+.rs-head{font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase}
+.rs-n{font-size:13px;font-weight:800;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rs-row input{width:100%;padding:9px;border:1.5px solid var(--line);border-radius:10px;background:var(--input-bg);font-weight:700;color:var(--ink)}
+.rs-hint{font-size:12px;color:var(--muted);font-weight:700;margin-bottom:12px}
+.rs-box{max-height:46vh;overflow:auto}
+/* auth */
+#auth-overlay{position:fixed;inset:0;background:linear-gradient(160deg,#4fc3f7 0%,#4a5f8f 55%,#2b2f5e 100%);z-index:9999;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.pin-logo{width:70px;height:70px;border-radius:22px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:30px;color:#fff;margin-bottom:16px}
+.pin-title{margin-bottom:26px;font-weight:800;font-size:16px;letter-spacing:3px;color:#fff;text-transform:uppercase}
+.pin-dots{display:flex;gap:18px;margin-bottom:40px}
+.dot{width:16px;height:16px;border-radius:50%;background:rgba(255,255,255,.3);transition:.2s}
+.dot.filled{background:var(--or1);box-shadow:0 0 14px var(--or1);transform:scale(1.2)}
+.numpad{display:grid;grid-template-columns:repeat(3,76px);gap:20px}
+.num-key{width:76px;height:76px;border-radius:50%;background:rgba(255,255,255,.18);display:flex;justify-content:center;align-items:center;font-size:24px;font-weight:800;color:#fff;cursor:pointer;transition:.15s}
+.num-key:active{background:var(--or1);transform:scale(.9)}
+.fc-actions.quad{grid-template-columns:repeat(4,1fr)}
+/* swal */
+.swal2-popup{background:#fff!important;border-radius:24px!important;padding:20px!important;color:var(--ink)!important;font-family:'Plus Jakarta Sans',sans-serif!important}
+.swal2-title{color:var(--ink)!important;font-size:20px!important;font-weight:800!important}
+.swal2-html-container{color:var(--ink)!important}
+.swal2-input,.swal2-textarea,.swal2-select{background:var(--input-bg)!important;border:1.5px solid var(--line)!important;color:var(--ink)!important;border-radius:13px!important;box-shadow:none!important}
+.swal2-confirm{border-radius:12px!important;font-weight:800!important}
+.swal2-cancel{background:#ffebee!important;color:#c62828!important;border-radius:12px!important;font-weight:800!important}
+.swal2-deny{border-radius:12px!important;font-weight:800!important}
+
+    </style>
+</head>
+<body>
+
+<div id="auth-overlay">
+    <div class="pin-logo"><i class="fas fa-shield-halved"></i></div>
+    <div class="pin-title">Security Access</div>
+    <div class="pin-dots" id="pin-dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+    <div class="numpad">
+        <div class="num-key" onclick="typePin(1)">1</div><div class="num-key" onclick="typePin(2)">2</div><div class="num-key" onclick="typePin(3)">3</div>
+        <div class="num-key" onclick="typePin(4)">4</div><div class="num-key" onclick="typePin(5)">5</div><div class="num-key" onclick="typePin(6)">6</div>
+        <div class="num-key" onclick="typePin(7)">7</div><div class="num-key" onclick="typePin(8)">8</div><div class="num-key" onclick="typePin(9)">9</div>
+        <div class="num-key" style="background:transparent;cursor:default"></div>
+        <div class="num-key" onclick="typePin(0)">0</div>
+        <div class="num-key" onclick="delPin()"><i class="fas fa-delete-left" style="font-size:20px"></i></div>
+    </div>
+</div>
+
+<div class="admin-header">
+    <div class="admin-logo"><div class="logo-dot"></div><div>GW.ESPORT.ADMIN<small>CONTROL CENTER</small></div></div>
+    <div class="logout-btn" onclick="location.reload()"><i class="fas fa-power-off"></i></div>
+</div>
+
+<section id="sec-dashboard" class="section active">
+    <div class="hero">
+        <div><div class="hero-lbl">Total Registered Users</div><div class="hero-val" id="stat-users">0</div></div>
+        <div class="hero-side"><span id="stat-today">+0</span><small>আজকের নতুন</small></div>
+    </div>
+    <div class="kpis">
+        <div class="kpi"><div class="kpi-ic" style="--c1:#ffa726;--c2:#ef6c00"><i class="fas fa-hourglass-half"></i></div><div><b id="k-pend">0</b><span>Pending Withdraw</span></div></div>
+        <div class="kpi"><div class="kpi-ic" style="--c1:#ef5350;--c2:#c62828"><i class="fas fa-tower-broadcast"></i></div><div><b id="k-live">0</b><span>Live Matches</span></div></div>
+        <div class="kpi"><div class="kpi-ic" style="--c1:#66bb6a;--c2:#2e7d32"><i class="fas fa-sack-dollar"></i></div><div><b id="k-dep">৳0</b><span>Users Deposit</span></div></div>
+        <div class="kpi"><div class="kpi-ic" style="--c1:#ab47bc;--c2:#6a1b9a"><i class="fas fa-money-bill-transfer"></i></div><div><b id="k-wd">৳0</b><span>Total Withdrawn</span></div></div>
+    </div>
+
+    <div class="chart-card">
+        <div class="chart-head"><h4><i class="fas fa-user-plus"></i> User Growth</h4>
+            <div class="rng" id="rng-users"><button data-r="7d" class="on">7D</button><button data-r="30d">30D</button><button data-r="1y">1Y</button></div></div>
+        <div id="chart-users"></div>
+        <div class="chart-foot" id="foot-users"></div>
+    </div>
+
+    <div class="chart-card">
+        <div class="chart-head"><h4><i class="fas fa-money-bill-wave"></i> Total Withdraw</h4>
+            <div class="rng" id="rng-wd"><button data-r="7d" class="on">7D</button><button data-r="30d">30D</button><button data-r="1y">1Y</button></div></div>
+        <div id="chart-wd"></div>
+        <div class="chart-foot" id="foot-wd"></div>
+    </div>
+
+    <div class="grid-section-title">Control Panel</div>
+    <div class="dash-grid">
+        <div class="dash-item" onclick="navTo('matches')"><div class="dash-icon-box" style="--c1:#7c4dff;--c2:#5e35b1"><i class="fas fa-gamepad"></i></div><div class="dash-text">Matches</div></div>
+        <div class="dash-item" onclick="navTo('categories')"><div class="dash-icon-box" style="--c1:#29b6f6;--c2:#0288d1"><i class="fas fa-layer-group"></i></div><div class="dash-text">Categories</div></div>
+        <div class="dash-item" onclick="navTo('users')"><div class="dash-icon-box" style="--c1:#66bb6a;--c2:#2e7d32"><i class="fas fa-users"></i></div><div class="dash-text">Users</div></div>
+        <div class="dash-item" onclick="navTo('withdraw')"><div class="dash-icon-box" style="--c1:#ef5350;--c2:#c62828"><i class="fas fa-wallet"></i></div><div class="dash-text">Withdrawals</div></div>
+        <div class="dash-item" onclick="navTo('sms')"><div class="dash-icon-box" style="--c1:#26c6da;--c2:#00838f"><i class="fas fa-comment-sms"></i></div><div class="dash-text">SMS Reader</div></div>
+        <div class="dash-item" onclick="navTo('notify')"><div class="dash-icon-box" style="--c1:#ab47bc;--c2:#6a1b9a"><i class="fas fa-paper-plane"></i></div><div class="dash-text">Notify</div></div>
+        <div class="dash-item" onclick="navTo('sliders')"><div class="dash-icon-box" style="--c1:#5c6bc0;--c2:#283593"><i class="fas fa-images"></i></div><div class="dash-text">Sliders</div></div>
+        <div class="dash-item" onclick="navTo('settings')"><div class="dash-icon-box" style="--c1:#ffa726;--c2:#ef6c00"><i class="fas fa-sliders"></i></div><div class="dash-text">App Settings</div></div>
+        <div class="dash-item" onclick="changeAdminPinPopup()"><div class="dash-icon-box" style="--c1:#ec407a;--c2:#ad1457"><i class="fas fa-key"></i></div><div class="dash-text">Change PIN</div></div>
+    </div>
+</section>
+
+<section id="sec-categories" class="section">
+    <div class="back-nav" onclick="navTo('dashboard')"><i class="fas fa-chevron-left"></i> Dashboard</div>
+    <div class="pg-head"><div class="pg-ic" style="--c1:#29b6f6;--c2:#0288d1"><i class="fas fa-layer-group"></i></div><div><h2>Categories</h2><p>গেম ক্যাটাগরি ম্যানেজ করুন</p></div></div>
+    <div class="list-container" id="category-list"><div class="empty">Loading...</div></div>
+    <div class="fab" onclick="addCategory()"><i class="fas fa-plus"></i></div>
+</section>
+
+<section id="sec-matches" class="section">
+    <div class="back-nav" onclick="navTo('dashboard')"><i class="fas fa-chevron-left"></i> Dashboard</div>
+    <div class="pg-head"><div class="pg-ic" style="--c1:#7c4dff;--c2:#5e35b1"><i class="fas fa-gamepad"></i></div><div><h2>Matches</h2><p>ম্যাচ তৈরি, রুম ও রেজাল্ট</p></div></div>
+    <div class="list-container" id="match-list"><div class="empty">Loading...</div></div>
+    <div class="fab" onclick="createMatchPopup()"><i class="fas fa-plus"></i></div>
+</section>
+
+<section id="sec-users" class="section">
+    <div class="back-nav" onclick="navTo('dashboard')"><i class="fas fa-chevron-left"></i> Dashboard</div>
+    <div class="pg-head"><div class="pg-ic" style="--c1:#66bb6a;--c2:#2e7d32"><i class="fas fa-users"></i></div><div><h2>Users</h2><p>ইউজার ও ব্যালেন্স ম্যানেজ</p></div></div>
+    <div class="search-box"><i class="fas fa-search"></i><input type="text" id="user-search" class="form-input search-input" placeholder="Search name, email, uid..." onkeyup="filterUsers()"></div>
+    <div class="list-container" id="user-list"></div>
+</section>
+
+<section id="sec-withdraw" class="section">
+    <div class="back-nav" onclick="navTo('dashboard')"><i class="fas fa-chevron-left"></i> Dashboard</div>
+    <div class="pg-head"><div class="pg-ic" style="--c1:#ef5350;--c2:#c62828"><i class="fas fa-wallet"></i></div><div><h2>Withdrawals</h2><p>উইথড্র রিকোয়েস্ট অ্যাপ্রুভ / রিফান্ড</p></div></div>
+    <div class="grid-section-title" style="margin-top:4px">Pending</div>
+    <div class="list-container" id="withdraw-list"></div>
+    <div class="grid-section-title">Recent History</div>
+    <div class="list-container" id="withdraw-history"></div>
+</section>
+
+<section id="sec-sms" class="section">
+    <div class="back-nav" onclick="navTo('dashboard')"><i class="fas fa-chevron-left"></i> Dashboard</div>
+    <div class="pg-head"><div class="pg-ic" style="--c1:#26c6da;--c2:#00838f"><i class="fas fa-comment-sms"></i></div><div><h2>SMS Reader</h2><p>অটো পেমেন্ট ভেরিফিকেশন</p></div></div>
+    <div class="set-card">
+        <div class="set-head" style="--c1:#26c6da;--c2:#00838f"><i class="fas fa-link"></i><div><b>Connection</b><small>SMS Receiver app এ Key + এই Database URL দিন</small></div></div>
+        <div class="set-body">
+            <label class="form-label">Firebase Database URL</label>
+            <div class="row-copy"><div class="mono sel" id="db-url"></div><button class="btn btn-primary btn-sm" onclick="copyText('db-url')"><i class="far fa-copy"></i></button></div>
+            <div class="steps"><b>১.</b> নিচে Key জেনারেট করুন &nbsp; <b>২.</b> SMS Receiver app এ Key দিয়ে লগইন করুন &nbsp; <b>৩.</b> ইউজার TrxID দিলে ভেরিফাই হয়ে ব্যালেন্স অটো যোগ হবে। Key Deactivate বা Delete করলে ওই ফোন সাথে সাথে বন্ধ হয়ে যাবে।</div>
+        </div>
+    </div>
+    <div class="set-card">
+        <div class="set-head" style="--c1:#ffa726;--c2:#ef6c00"><i class="fas fa-key"></i><div><b>SMS Reader Keys</b><small>প্রতিটি ফোনের জন্য আলাদা Key বানান</small></div></div>
+        <div class="set-body">
+            <div class="form-group"><label class="form-label">Reader name</label><input type="text" id="reader-name" class="form-input" placeholder="e.g. My Phone"></div>
+            <button class="btn btn-orange" style="width:100%;margin-bottom:16px" onclick="generateReaderKey()"><i class="fas fa-key"></i> GENERATE KEY</button>
+        </div>
+    </div>
+    <div class="grid-section-title">Reader Keys (<span id="rk-count">0</span>)</div>
+    <div class="list-container" id="reader-list"></div>
+    <div class="grid-section-title">Recent SMS Received</div>
+    <div id="sms-log"></div>
+</section>
+
+<section id="sec-settings" class="section">
+    <div class="back-nav" onclick="navTo('dashboard')"><i class="fas fa-chevron-left"></i> Dashboard</div>
+    <div class="pg-head"><div class="pg-ic" style="--c1:#ffa726;--c2:#ef6c00"><i class="fas fa-sliders"></i></div><div><h2>App Settings</h2><p>ইউজার অ্যাপের সব সেটিং এখান থেকে</p></div></div>
+    <div id="settings-form"></div>
+    <div class="save-bar"><button class="btn btn-orange" onclick="saveSettings()"><i class="fas fa-floppy-disk"></i> SAVE ALL SETTINGS</button></div>
+</section>
+
+<section id="sec-sliders" class="section">
+    <div class="back-nav" onclick="navTo('dashboard')"><i class="fas fa-chevron-left"></i> Dashboard</div>
+    <div class="pg-head"><div class="pg-ic" style="--c1:#5c6bc0;--c2:#283593"><i class="fas fa-images"></i></div><div><h2>Sliders</h2><p>হোম পেজ ব্যানার</p></div></div>
+    <div class="list-container" id="slider-list"></div>
+    <div class="set-card" style="margin-top:16px">
+        <div class="set-head" style="--c1:#5c6bc0;--c2:#283593"><i class="fas fa-plus"></i><div><b>Add New Banner</b><small>Image URL ও Link দিন</small></div></div>
+        <div class="set-body">
+            <div class="form-group"><input type="text" id="new-slider-img" class="form-input" placeholder="Image URL"></div>
+            <div class="form-group"><input type="text" id="new-slider-link" class="form-input" placeholder="Link (Optional)"></div>
+            <button class="btn btn-primary" style="width:100%;margin-bottom:16px" onclick="addSlider()">ADD BANNER</button>
+        </div>
+    </div>
+</section>
+
+<section id="sec-notify" class="section">
+    <div class="back-nav" onclick="navTo('dashboard')"><i class="fas fa-chevron-left"></i> Dashboard</div>
+    <div class="pg-head"><div class="pg-ic" style="--c1:#ab47bc;--c2:#6a1b9a"><i class="fas fa-paper-plane"></i></div><div><h2>Notify</h2><p>ইউজারদের নোটিফিকেশন পাঠান</p></div></div>
+    <div class="set-card">
+        <div class="set-body" style="padding-top:18px">
+            <div class="form-group"><label class="form-label">Title</label><input type="text" id="notif-title" class="form-input"></div>
+            <div class="form-group"><label class="form-label">Message</label><textarea id="notif-body" class="form-input" rows="4"></textarea></div>
+            <button class="btn btn-orange" style="width:100%;margin-bottom:16px" onclick="sendNotification()"><i class="fas fa-paper-plane"></i> SEND NOW</button>
+        </div>
+    </div>
+    <div class="grid-section-title">Sent Notifications</div>
+    <div class="list-container" id="notif-list"></div>
+</section>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getDatabase, ref, set, onValue, push, update, remove, get, limitToLast, query } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+        const firebaseConfig = {
+  apiKey: "AIzaSyDvm35MeKNAoK2Fx8HUmqyMdlJdHfKXqAw",
+  authDomain: "gw-e-sport-d1d27.firebaseapp.com",
+  databaseURL: "https://gw-e-sport-d1d27-default-rtdb.firebaseio.com",
+  projectId: "gw-e-sport-d1d27",
+  storageBucket: "gw-e-sport-d1d27.firebasestorage.app",
+  messagingSenderId: "398248878277",
+  appId: "1:398248878277:web:75565dffcda4fa0859d0ac",
+  measurementId: "G-DCD8VQ95LH"
+};
+
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        let allUsers = [];
+        let allCategories = [];
+        let currentAdminPin = "1234";
+
+        // --- AUTH LOGIC ---
+        onValue(ref(db, 'app_settings/admin_pin'), s => {
+            if(s.exists()) currentAdminPin = String(s.val());
+        });
+
+        let pin = "";
+        window.typePin = (n) => {
+            if(pin.length < 4) { // HIGHEST 4 DIGIT CONSTRAINT
+                pin += n;
+                updateDots();
+            }
+            if(pin === currentAdminPin) { 
+                document.getElementById('auth-overlay').style.display = 'none';
+                initAdmin();
+            } else if (pin.length === 4) {
+                setTimeout(() => { 
+                    if(pin !== currentAdminPin) { pin = ""; updateDots(); }
+                }, 300);
+            }
+        };
+        window.delPin = () => { pin = pin.slice(0, -1); updateDots(); };
+        
+        function updateDots() {
+            const dots = document.querySelectorAll('.dot');
+            dots.forEach((d, i) => {
+                if(i < pin.length) d.classList.add('filled');
+                else d.classList.remove('filled');
+            });
+        }
+
+        // --- NAVIGATION ---
+        window.navTo = (id) => {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById(`sec-${id}`).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        // --- INITIALIZATION ---
+        function initAdmin() {
+            onValue(ref(db, 'users'), s => {
+                const d = s.val() || {};
+                allUsers = Object.entries(d).map(([k, v]) => ({ uid: k, ...v }));
+                document.getElementById('stat-users').innerText = allUsers.length;
+                renderUsers(allUsers); refreshCharts(); updateKpis();
+            });
+            loadCategories(); loadMatches(); loadWithdrawals(); loadSettings(); loadSliders(); loadSms(); loadNotifList(); loadLive();
+        }
+
+        // --- CATEGORIES MANAGEMENT ---
+        function loadCategories() {
+            onValue(ref(db, 'categories'), s => {
+                const list = document.getElementById('category-list');
+                list.innerHTML = "";
+                const d = s.val();
+                allCategories = []; // Reset global var for dropdowns
+                if(!d) return list.innerHTML = "<div style='text-align:center;color:#666'>No categories found</div>";
+                
+                Object.entries(d).forEach(([key, c]) => {
+                    allCategories.push({id: key, name: c.name}); // Store for match dropdown
+                    list.innerHTML += `
+                    <div class="flat-card">
+                        <div class="cat-card-row">
+                            <img src="${c.img}" class="cat-img">
+                            <div class="cat-info">
+                                <div class="fc-title">${c.name}</div>
+                                <div style="font-size:10px; color:var(--text-muted); opacity:0.7">ID: ${key}</div>
+                            </div>
+                            <div class="cat-actions">
+                                <button class="btn btn-primary" style="padding:10px" onclick="editCategory('${key}')"><i class="fas fa-edit"></i></button>
+                                <button class="btn btn-danger" style="padding:10px" onclick="deleteCategory('${key}')"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                    </div>`;
+                });
+            });
+        }
+
+        window.addCategory = async () => {
+            const { value: formValues } = await Swal.fire({
+                title: 'Add Category',
+                html: `
+                    <label class="form-label" style="text-align:left">Category Name</label>
+                    <input id="cat-name" class="swal2-input" placeholder="e.g. Free Fire">
+                    <label class="form-label" style="text-align:left; margin-top:10px;">Image URL</label>
+                    <input id="cat-img" class="swal2-input" placeholder="https://...">
+                `,
+                focusConfirm: false,
+                showCancelButton: true,
+                confirmButtonText: 'Add',
+                confirmButtonColor: '#00BCD4',
+                preConfirm: () => {
+                    return {
+                        name: document.getElementById('cat-name').value,
+                        img: document.getElementById('cat-img').value
+                    }
+                }
+            });
+
+            if (formValues && formValues.name) {
+                push(ref(db, 'categories'), formValues);
+                Swal.fire({icon:'success', title:'Category Added', timer:1000, showConfirmButton:false});
+            }
+        }
+
+        window.editCategory = async (key) => {
+            const snap = await get(ref(db, `categories/${key}`));
+            const cat = snap.val();
+            const { value: formValues } = await Swal.fire({
+                title: 'Edit Category',
+                html: `
+                    <label class="form-label" style="text-align:left">Category Name</label>
+                    <input id="cat-name" class="swal2-input" value="${cat.name}">
+                    <label class="form-label" style="text-align:left; margin-top:10px;">Image URL</label>
+                    <input id="cat-img" class="swal2-input" value="${cat.img}">
+                `,
+                focusConfirm: false,
+                showCancelButton: true,
+                confirmButtonText: 'Update',
+                confirmButtonColor: '#7C4DFF',
+                preConfirm: () => {
+                    return {
+                        name: document.getElementById('cat-name').value,
+                        img: document.getElementById('cat-img').value
+                    }
+                }
+            });
+
+            if (formValues) {
+                update(ref(db, `categories/${key}`), formValues);
+                Swal.fire({icon:'success', title:'Updated', timer:1000, showConfirmButton:false});
+            }
+        }
+
+        window.deleteCategory = (key) => {
+            Swal.fire({title:'Delete Category?', text:"Matches in this category won't be deleted automatically.", icon:'warning', showCancelButton:true, confirmButtonColor:'#FF5252'}).then((r)=>{
+                if(r.isConfirmed) remove(ref(db, `categories/${key}`));
+            });
+        }
+
+        // --- MATCHES (With Date/Time Picker & Dynamic Category) ---
+        function loadMatches() {
+            onValue(ref(db, 'matches'), s => {
+                const list = document.getElementById('match-list');
+                list.innerHTML = "";
+                const d = s.val();
+                if(!d) return list.innerHTML = "<div style='text-align:center;color:#666'>No matches created</div>";
+                
+                Object.entries(d).reverse().forEach(([key, m]) => {
+                    let tagClass = m.status === 'Upcoming' ? 'tag-yellow' : (m.status === 'Ongoing' ? 'tag-blue' : 'tag-green');
+                    list.innerHTML += `
+                    <div class="flat-card">
+                        <div class="fc-header">
+                            <div class="fc-title">${m.title}</div>
+                            <div class="fc-tag ${tagClass}">${m.status}</div>
+                        </div>
+                        <div class="fc-detail"><span>Date:</span> <span class="fc-value">${m.time}</span></div>
+                        <div class="fc-detail"><span>Map/Type:</span> <span class="fc-value">${m.map} - ${m.type}</span></div>
+                        <div class="fc-detail"><span>Entry/Prize:</span> <span style="color:var(--success); font-weight:700;">৳${m.entry} / ৳${m.total_prize}</span></div>
+                        <div class="fc-detail"><span>Joined:</span> <span style="color:var(--warning); font-weight:700;">${m.joined || 0}/${m.total}</span></div>
+                        
+                        <div class="fc-actions tri">
+                            <button class="btn btn-primary" onclick="editMatch('${key}')"><i class="fas fa-cog"></i> Manage</button>
+                            <button class="btn btn-orange" onclick="openResult('${key}')"><i class="fas fa-trophy"></i> Result</button>
+                            <button class="btn btn-danger" onclick="deleteMatch('${key}')"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>`;
+                });
+            });
+        }
+
+        window.createMatchPopup = async () => {
+            // Generate Category Options
+            let catOptions = "";
+            if(allCategories.length === 0) {
+                catOptions = "<option disabled selected>No categories! Add one first.</option>";
+            } else {
+                allCategories.forEach(c => {
+                    catOptions += `<option value="${c.id}">${c.name}</option>`;
+                });
+            }
+
+            const { value: formValues } = await Swal.fire({
+                title: 'Create New Match',
+                width: 600,
+                html: `
+                    <div style="text-align:left">
+                        <label class="form-label">Match Title</label>
+                        <input id="swal-title" class="swal2-input" placeholder="e.g. Regular Match">
+                        
+                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px; margin-top:15px;">
+                            <div><label class="form-label">Date</label><input id="swal-date" type="date" class="swal2-input"></div>
+                            <div><label class="form-label">Time</label><input id="swal-time" type="time" class="swal2-input"></div>
+                        </div>
+
+                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px; margin-top:15px;">
+                            <div>
+                                <label class="form-label">Type</label>
+                                <select id="swal-type" class="swal2-select" style="width:100%"><option>Solo</option><option>Duo</option><option>Squad</option></select>
+                            </div>
+                            <div>
+                                <label class="form-label">Map</label>
+                                <input id="swal-map" class="swal2-input" placeholder="e.g. Bermuda">
+                            </div>
+                        </div>
+
+                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px; margin-top:15px;">
+                            <div><label class="form-label">Entry Fee</label><input id="swal-entry" type="number" class="swal2-input"></div>
+                            <div><label class="form-label">Total Prize</label><input id="swal-prize" type="number" class="swal2-input"></div>
+                        </div>
+
+                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px; margin-top:15px;">
+                            <div><label class="form-label">Per Kill</label><input id="swal-kill" type="number" class="swal2-input"></div>
+                            <div><label class="form-label">Total Slots</label><input id="swal-total" type="number" class="swal2-input"></div>
+                        </div>
+
+                        <label class="form-label" style="margin-top:15px;">Category</label>
+                        <select id="swal-cat" class="swal2-select" style="width:100%">
+                            ${catOptions}
+                        </select>
+                    </div>
+                `,
+                focusConfirm: false,
+                showCancelButton: true,
+                confirmButtonText: 'Create',
+                confirmButtonColor: '#7C4DFF',
+                preConfirm: () => {
+                    const date = document.getElementById('swal-date').value;
+                    const time = document.getElementById('swal-time').value;
+                    const catId = document.getElementById('swal-cat').value;
+                    
+                    if(!document.getElementById('swal-title').value.trim()) return Swal.showValidationMessage('Match title required');
+                    if(!date || !time) return Swal.showValidationMessage('Date and Time required');
+                    if(!catId) return Swal.showValidationMessage('Select a Category');
+
+                    // Create formatted Time String
+                    const dObj = new Date(`${date}T${time}`);
+                    const dateStr = dObj.toLocaleDateString('en-US', { day: 'numeric', month: 'short' });
+                    const timeStr = dObj.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+                    const finalDisplayTime = `${dateStr} - ${timeStr}`;
+
+                    return {
+                        title: document.getElementById('swal-title').value,
+                        time: finalDisplayTime,
+                        type: document.getElementById('swal-type').value,
+                        map: document.getElementById('swal-map').value,
+                        entry: parseInt(document.getElementById('swal-entry').value) || 0,
+                        total_prize: parseInt(document.getElementById('swal-prize').value) || 0,
+                        per_kill: parseInt(document.getElementById('swal-kill').value) || 0,
+                        total: parseInt(document.getElementById('swal-total').value) || 48,
+                        categoryId: catId,
+                        status: 'Upcoming',
+                        timestamp: dObj.getTime()
+                    }
+                }
+            });
+
+            if (formValues) {
+                push(ref(db, 'matches'), formValues);
+                Swal.fire({icon: 'success', title: 'Match Created', timer: 1500, showConfirmButton: false});
+            }
+        };
+
+        window.deleteMatch = (key) => {
+            Swal.fire({ title: 'Delete Match?', icon: 'warning', showCancelButton: true, confirmButtonColor: '#FF5252' }).then((r) => {
+                if(r.isConfirmed) remove(ref(db, `matches/${key}`));
+            });
+        };
+
+        window.editMatch = async (key) => {
+            const snapshot = await get(ref(db, `matches/${key}`));
+            const m = snapshot.val();
+
+            const { value: formValues } = await Swal.fire({
+                title: 'Manage Match',
+                html: `
+                    <label class="form-label" style="text-align:left">Game Status</label>
+                    <select id="edit-status" class="swal2-select" style="width:100%; margin-top:0;">
+                        <option ${m.status=='Upcoming'?'selected':''}>Upcoming</option>
+                        <option ${m.status=='Ongoing'?'selected':''}>Ongoing</option>
+                        <option ${m.status=='Finished'?'selected':''}>Finished</option>
+                    </select>
+                    <label class="form-label" style="text-align:left; margin-top:15px">Room ID</label>
+                    <input id="edit-roomid" class="swal2-input" value="${m.room_id || ''}" placeholder="Enter Room ID">
+                    <label class="form-label" style="text-align:left; margin-top:15px">Room Password</label>
+                    <input id="edit-pass" class="swal2-input" value="${m.room_pass || ''}" placeholder="Enter Password">
+                    <label class="form-label" style="text-align:left; margin-top:15px">Prize Distribution Text</label>
+                    <textarea id="edit-desc" class="swal2-textarea" placeholder="Winner: 100tk...">${m.prize_desc || ''}</textarea>
+                `,
+                confirmButtonText: 'Update',
+                confirmButtonColor: '#7C4DFF',
+                preConfirm: () => {
+                    return {
+                        status: document.getElementById('edit-status').value,
+                        room_id: document.getElementById('edit-roomid').value,
+                        room_pass: document.getElementById('edit-pass').value,
+                        prize_desc: document.getElementById('edit-desc').value
+                    }
+                }
+            });
+
+            if (formValues) {
+                update(ref(db, `matches/${key}`), formValues);
+                Swal.fire({icon: 'success', title: 'Updated', timer: 1500, showConfirmButton: false});
+            }
+        }
+
+        // --- USERS ---
+                window.filterUsers = () => {
+            const q = document.getElementById('user-search').value.toLowerCase();
+            const filtered = allUsers.filter(u => 
+                (u.username && u.username.toLowerCase().includes(q)) || 
+                (u.email && u.email.toLowerCase().includes(q)) ||
+                u.uid.toLowerCase().includes(q)
+            );
+            renderUsers(filtered);
+        }
+
+        window.editUserBalance = async (uid, dep, win) => {
+            const { value: formValues } = await Swal.fire({
+                title: 'Adjust Balance',
+                html: `
+                    <label class="form-label" style="text-align:left">Deposit Wallet</label>
+                    <input id="bal-dep" type="number" class="swal2-input" value="${dep}">
+                    <label class="form-label" style="text-align:left; margin-top:15px">Winning Wallet</label>
+                    <input id="bal-win" type="number" class="swal2-input" value="${win}">
+                `,
+                confirmButtonText: 'Save',
+                confirmButtonColor: '#00E676',
+                preConfirm: () => {
+                    return {
+                        deposit: parseInt(document.getElementById('bal-dep').value) || 0,
+                        winning: parseInt(document.getElementById('bal-win').value) || 0
+                    }
+                }
+            });
+
+            if (formValues) {
+                update(ref(db, `users/${uid}`), formValues);
+                Swal.fire({icon:'success', title:'Updated', showConfirmButton:false, timer:1000});
+            }
+        }
+
+                // --- CHANGE PIN POPUP ---
+        window.changeAdminPinPopup = async () => {
+            const { value: newPin } = await Swal.fire({
+                title: 'Change Admin PIN',
+                input: 'text',
+                inputAttributes: {
+                    maxlength: 4,
+                    pattern: "[0-9]*",
+                    inputmode: "numeric"
+                },
+                inputPlaceholder: 'Enter 4-digit PIN',
+                confirmButtonText: 'Set PIN',
+                confirmButtonColor: '#FF1744',
+                showCancelButton: true,
+                inputValidator: (value) => {
+                    if (!value || value.length !== 4 || isNaN(value)) {
+                        return 'PIN must be exactly 4 digits!'
+                    }
+                }
+            });
+
+            if (newPin) {
+                update(ref(db, 'app_settings'), { admin_pin: newPin });
+                Swal.fire({icon: 'success', title: 'PIN Changed!', showConfirmButton: false, timer: 1500});
+            }
+        };
+
+                // --- SLIDERS ---
+        function loadSliders() {
+            onValue(ref(db, 'app_settings/banners'), s => {
+                const d = s.val();
+                const list = document.getElementById('slider-list');
+                list.innerHTML = "";
+                if(d) {
+                    Object.entries(d).forEach(([k, v]) => {
+                        list.innerHTML += `
+                        <div class="flat-card" style="display:flex; justify-content:space-between; align-items:center; padding:10px;">
+                            <img src="${v.img}" style="width:80px; height:40px; object-fit:cover; border-radius:6px;">
+                            <button class="btn btn-danger" style="padding:8px" onclick="deleteSlider('${k}')"><i class="fas fa-trash"></i></button>
+                        </div>`;
+                    });
+                }
+            });
+        }
+
+        window.addSlider = () => {
+            const img = document.getElementById('new-slider-img').value;
+            const link = document.getElementById('new-slider-link').value;
+            if(!img) return Swal.fire('Error', 'Image URL required', 'error');
+            
+            push(ref(db, 'app_settings/banners'), { img: img, link: link });
+            document.getElementById('new-slider-img').value = "";
+            document.getElementById('new-slider-link').value = "";
+            Swal.fire({icon:'success', title:'Added', showConfirmButton:false, timer:1000});
+        }
+
+        window.deleteSlider = (k) => remove(ref(db, `app_settings/banners/${k}`));
+
+        // --- NOTIFICATIONS ---
+        window.sendNotification = () => {
+            const title = document.getElementById('notif-title').value;
+            const body = document.getElementById('notif-body').value;
+            if(!title || !body) return Swal.fire('Error', 'Fill all fields', 'error');
+
+            push(ref(db, 'notifications'), {
+                title: title,
+                body: body,
+                time: new Date().toLocaleString()
+            });
+            Swal.fire({icon: 'success', title: 'Sent', showConfirmButton: false, timer: 1500});
+            document.getElementById('notif-title').value = "";
+            document.getElementById('notif-body').value = "";
+        }
+
+        /* ================= EXTRA MODULES ================= */
+        let appCfg = {};
+        function mailRows(arr) {
+        return (arr || []).map(function(x){ return '<tr><td style="padding:9px 0;color:#8a82a8;font-size:13px;border-bottom:1px solid #f0eaff">' + String(x[0]).replace(/[<>&]/g,'') + '</td><td style="padding:9px 0;text-align:right;font-weight:700;color:#2b3a67;font-size:13px;border-bottom:1px solid #f0eaff">' + String(x[1]).replace(/[<>&]/g,'') + '</td></tr>'; }).join('');
+    }
+        async function sendMail(to, name, subject, headline, message, details) {
+            const c = appCfg || {};
+            if (!(c.email_enabled === true || c.email_enabled === 'true') || !c.emailjs_service_id || !c.emailjs_template_id || !c.emailjs_public_key || !to) return false;
+            try {
+                const r = await fetch('https://api.emailjs.com/api/v1.0/email/send', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ service_id: c.emailjs_service_id, template_id: c.emailjs_template_id, user_id: c.emailjs_public_key, template_params: { to_email: to, to_name: name || 'Player', subject, headline, message, details_html: mailRows(details), app_name: c.app_name || 'Tournament App', year: new Date().getFullYear() } }) });
+                return r.ok;
+            } catch (e) { return false; }
+        }
+        window.testMail = async () => {
+            const { value: em } = await Swal.fire({ title: 'Test Email', input: 'email', inputPlaceholder: 'your@email.com', showCancelButton: true, confirmButtonText: 'Send', confirmButtonColor: '#7c4dff' });
+            if (!em) return;
+            const ok = await sendMail(em, 'Admin', 'Test Email', 'Email সিস্টেম কাজ করছে ✅', 'এটি একটি টেস্ট ইমেইল। সবকিছু ঠিকভাবে কানেক্ট হয়েছে।', [['Status', 'Connected']]);
+            Swal.fire(ok ? 'Sent' : 'Failed', ok ? 'ইনবক্স / স্প্যাম ফোল্ডার চেক করুন' : 'আগে Settings Save করুন, তারপর Service ID / Template ID / Public Key ঠিক আছে কিনা দেখুন', ok ? 'success' : 'error');
+        };
+        const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+        const DAY = 864e5;
+        const taka = n => '৳' + Math.round(n || 0).toLocaleString('en-US');
+        let allWd = [], allTxRaw = null, authPay = {}, payData = {}, keyData = {};
+        const range = { users: '7d', wd: '7d' };
+
+        window.copyText = (id) => {
+            const t = document.getElementById(id).innerText;
+            navigator.clipboard.writeText(t).then(() => Swal.fire({icon:'success', title:'Copied', timer:900, showConfirmButton:false}));
+        };
+
+        /* ---- chart helpers ---- */
+        function buckets(r) {
+            const now = new Date(), out = [];
+            if (r === '1y') {
+                for (let i = 11; i >= 0; i--) {
+                    const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+                    const e = new Date(d.getFullYear(), d.getMonth() + 1, 1);
+                    out.push({ label: d.toLocaleString('en', { month: 'short' }), s: d.getTime(), e: e.getTime() });
+                }
+            } else {
+                const n = r === '7d' ? 7 : 30;
+                const today = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+                for (let i = n - 1; i >= 0; i--) {
+                    const s = today - i * DAY, d = new Date(s);
+                    out.push({ label: r === '7d' ? d.toLocaleString('en', { weekday: 'short' }) : String(d.getDate()), s, e: s + DAY });
+                }
+            }
+            return out;
+        }
+        function niceMax(v) { if (v <= 4) return 4; const p = Math.pow(10, Math.floor(Math.log10(v))); const f = v / p; return (f <= 1 ? 1 : f <= 2 ? 2 : f <= 5 ? 5 : 10) * p; }
+        function drawChart(elId, bk, bars, line, c1, c2) {
+            const el = document.getElementById(elId); if (!el) return;
+            const W = 340, H = 200, L = 36, R = line ? 30 : 10, T = 16, B = 28, pw = W - L - R, ph = H - T - B, n = bk.length;
+            const mb = niceMax(Math.max(...bars, 0)), ml = line ? niceMax(Math.max(...line, 0)) : 0;
+            let g = `<defs><linearGradient id="g_${elId}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${c1}"/><stop offset="1" stop-color="${c2}"/></linearGradient></defs>`;
+            for (let i = 0; i <= 4; i++) {
+                const y = T + ph - ph * i / 4;
+                g += `<line x1="${L}" x2="${W - R}" y1="${y}" y2="${y}" stroke="#ece4fb" stroke-dasharray="3 3"/><text x="${L - 5}" y="${y + 3}" font-size="9" fill="#a69fc2" text-anchor="end">${Math.round(mb * i / 4)}</text>`;
+                if (line) g += `<text x="${W - R + 5}" y="${y + 3}" font-size="9" fill="#ef6c00">${Math.round(ml * i / 4)}</text>`;
+            }
+            const slot = pw / n, bw = Math.max(3, slot * 0.6);
+            bars.forEach((v, i) => {
+                const h = mb ? ph * v / mb : 0, x = L + slot * i + (slot - bw) / 2, y = T + ph - h;
+                g += `<rect x="${x}" y="${y}" width="${bw}" height="${Math.max(h, v > 0 ? 2 : 0)}" rx="${Math.min(5, bw / 2)}" fill="url(#g_${elId})"><title>${bk[i].label}: ${v}</title></rect>`;
+                if (n <= 12 && v > 0) g += `<text x="${x + bw / 2}" y="${y - 4}" font-size="9" font-weight="700" fill="#4a5f8f" text-anchor="middle">${v >= 1000 ? Math.round(v / 100) / 10 + 'k' : v}</text>`;
+                if (n <= 12 || i % 5 === 0 || i === n - 1) g += `<text x="${x + bw / 2}" y="${H - 10}" font-size="9" fill="#8a82a8" text-anchor="middle">${bk[i].label}</text>`;
+            });
+            if (line) {
+                const pts = line.map((v, i) => `${L + slot * i + slot / 2},${T + ph - (ml ? ph * v / ml : 0)}`);
+                g += `<polyline points="${pts.join(' ')}" fill="none" stroke="#ef6c00" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>`;
+                pts.forEach((p, i) => { if (n <= 12) g += `<circle cx="${p.split(',')[0]}" cy="${p.split(',')[1]}" r="3" fill="#fff" stroke="#ef6c00" stroke-width="2"><title>${bk[i].label}: ${line[i]}</title></circle>`; });
+            }
+            el.innerHTML = `<svg viewBox="0 0 ${W} ${H}" width="100%" style="display:block">${g}</svg>`;
+        }
+        function userTs(u) { return u.createdAt || u.created_at || 0; }
+        function refreshCharts() {
+            // users
+            const bk = buckets(range.users);
+            const withDate = allUsers.filter(u => userTs(u));
+            const noDate = allUsers.length - withDate.length;
+            const nw = bk.map(b => withDate.filter(u => userTs(u) >= b.s && userTs(u) < b.e).length);
+            const before = noDate + withDate.filter(u => userTs(u) < bk[0].s).length;
+            let run = before; const cum = nw.map(v => (run += v));
+            drawChart('chart-users', bk, nw, cum, '#4fc3f7', '#4a5f8f');
+            const sum = nw.reduce((a, b) => a + b, 0);
+            document.getElementById('foot-users').innerHTML = `<span class="lg"><i style="background:#4a5f8f"></i>New signups <b>${sum}</b></span><span class="lg"><i style="background:#ef6c00"></i>Total users <b>${allUsers.length}</b></span>` + (noDate ? `<span>${noDate} পুরনো অ্যাকাউন্টে তারিখ নেই</span>` : '');
+            // withdraw
+            const bw = buckets(range.wd);
+            const amt = bw.map(b => allWd.filter(t => t.status === 'Success' && t.ts >= b.s && t.ts < b.e).reduce((a, t) => a + t.amount, 0));
+            const cnt = bw.map(b => allWd.filter(t => t.ts >= b.s && t.ts < b.e).length);
+            drawChart('chart-wd', bw, amt, cnt, '#ffa726', '#ef6c00');
+            document.getElementById('foot-wd').innerHTML = `<span class="lg"><i style="background:#ef6c00"></i>Withdrawn <b>${taka(amt.reduce((a, b) => a + b, 0))}</b></span><span class="lg"><i style="background:#ef6c00;border-radius:50%"></i>Requests <b>${cnt.reduce((a, b) => a + b, 0)}</b></span>`;
+        }
+        ['users', 'wd'].forEach(k => document.querySelectorAll(`#rng-${k} button`).forEach(b => b.onclick = () => {
+            range[k] = b.dataset.r;
+            document.querySelectorAll(`#rng-${k} button`).forEach(x => x.classList.toggle('on', x === b));
+            refreshCharts();
+        }));
+        function updateKpis() {
+            const today = new Date(); today.setHours(0, 0, 0, 0);
+            const t = allUsers.filter(u => userTs(u) >= today.getTime()).length;
+            document.getElementById('stat-today').innerText = '+' + t;
+            document.getElementById('k-dep').innerText = taka(allUsers.reduce((a, u) => a + (u.deposit || 0), 0));
+            document.getElementById('k-pend').innerText = allWd.filter(x => x.status === 'Pending').length;
+            document.getElementById('k-wd').innerText = taka(allWd.filter(x => x.status === 'Success').reduce((a, x) => a + x.amount, 0));
+        }
+
+        /* ---- SMS READER (readers/{key} + sms_inbox) ---- */
+        function randomKey() {
+            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+            const arr = new Uint32Array(20);
+            crypto.getRandomValues(arr);
+            let k = 'RH';
+            arr.forEach((n, i) => { if (i % 5 === 0) k += '-'; k += chars[n % chars.length]; });
+            return k; // e.g. RH-ABCDE-FGHJK-LMNPQ-RSTUV
+        }
+        window.generateReaderKey = async () => {
+            const name = document.getElementById('reader-name').value.trim() || 'Reader';
+            const key = randomKey();
+            await set(ref(db, 'readers/' + key), { name, active: true, createdAt: new Date().toLocaleString(), lastSeen: '' });
+            document.getElementById('reader-name').value = '';
+            Swal.fire({ icon: 'success', title: 'Key Generated', html: `<div class="mono sel" style="font-size:15px;margin-top:8px">${key}</div>`, confirmButtonText: 'Copy', confirmButtonColor: '#ef6c00' })
+                .then(() => navigator.clipboard && navigator.clipboard.writeText(key));
+        };
+        window.copyReaderKey = (k) => { navigator.clipboard && navigator.clipboard.writeText(k); Swal.fire({ icon: 'success', title: 'Copied', timer: 900, showConfirmButton: false }); };
+        window.toggleReader = (k, val) => update(ref(db, 'readers/' + k), { active: val });
+        window.deleteReader = async (k) => {
+            const r = await Swal.fire({ title: 'Delete key?', text: 'That phone will stop working.', icon: 'warning', showCancelButton: true, confirmButtonColor: '#e53935' });
+            if (r.isConfirmed) remove(ref(db, 'readers/' + k));
+        };
+        function loadSms() {
+            document.getElementById('db-url').innerText = firebaseConfig.databaseURL;
+            onValue(ref(db, 'readers'), s => {
+                const d = s.val() || {};
+                const ks = Object.entries(d);
+                document.getElementById('rk-count').innerText = ks.length;
+                document.getElementById('reader-list').innerHTML = ks.length ? ks.map(([k, r]) => `
+                <div class="flat-card">
+                    <div class="fc-header"><div class="fc-title">${esc(r.name || 'Reader')}</div><div class="fc-tag ${r.active ? 'tag-green' : 'tag-red'}">${r.active ? 'Active' : 'Disabled'}</div></div>
+                    <div class="mono sel">${esc(k)}</div>
+                    <div class="fc-detail" style="margin-top:10px"><span><i class="far fa-calendar"></i> Created</span><span class="fc-value">${esc(r.createdAt || '-')}</span></div>
+                    <div class="fc-detail"><span><i class="far fa-clock"></i> Last seen</span><span class="fc-value">${esc(r.lastSeen || 'never')}</span></div>
+                    <div class="fc-actions tri"><button class="btn btn-primary btn-sm" onclick="copyReaderKey('${k}')"><i class="far fa-copy"></i> Copy</button><button class="btn ${r.active ? 'btn-danger' : 'btn-success'} btn-sm" onclick="toggleReader('${k}', ${!r.active})">${r.active ? 'Deactivate' : 'Activate'}</button><button class="btn btn-danger btn-sm" onclick="deleteReader('${k}')"><i class="fas fa-trash"></i></button></div>
+                </div>`).join('') : '<div class="empty">No reader keys</div>';
+            });
+            onValue(query(ref(db, 'sms_inbox'), limitToLast(15)), s => {
+                const d = s.val();
+                const box = document.getElementById('sms-log');
+                if (!d) { box.innerHTML = '<div class="empty">No SMS yet</div>'; return; }
+                const rows = Object.entries(d).map(([k, v]) => ({ k, ...v })).sort((a, b) => (b.receivedAt || 0) - (a.receivedAt || 0));
+                box.innerHTML = rows.map(v => `<div class="pay-row"><div class="pay-amt">${taka(parseFloat(v.amount))}</div><div class="pay-mid"><b>${esc(v.k)}</b>${esc([v.method, v.sender, v.time].filter(Boolean).join(' · '))}</div><div class="fc-tag ${v.used ? 'tag-red' : 'tag-green'}">${v.used ? 'Used' : 'Unused'}</div></div>`).join('');
+            });
+        }
+
+        
+        /* ---- SETTINGS (auto-generated form) ---- */
+        const SET_GROUPS = [
+            { t: 'General', s: 'অ্যাপের নাম, লোগো ও নোটিশ', i: 'fa-circle-info', c: ['#42a5f5', '#5c6bc0'], f: [
+                { k: 'app_name', l: 'App Name', h: 'Splash, Login, Home, Wallet ও Email এ এই নাম দেখাবে' }, { k: 'app_logo', l: 'Logo URL', img: 1 },
+                { k: 'notice', l: 'Marquee Notice', ta: 2 }, { k: 'popup_text', l: 'Startup Popup Text', ta: 3 },
+                { k: 'show_popup', l: 'Enable Popup', bool: 1 } ] },
+            { t: 'Payment & Wallet', s: 'পেমেন্ট নম্বর ও উইথড্র লিমিট', i: 'fa-wallet', c: ['#66bb6a', '#2e7d32'], f: [
+                { k: 'bkash_number', l: 'bKash Number', tel: 1 }, { k: 'nagad_number', l: 'Nagad Number', tel: 1 }, { k: 'rocket_number', l: 'Rocket Number', tel: 1 },
+                { k: 'min_withdraw', l: 'Minimum Withdraw (৳)', num: 1, h: 'খালি রাখলে ১০০' } ] },
+            { t: '24/7 Support (WhatsApp)', s: 'ইউজারের Support বাটন ও ফ্লোটিং বাটন যেখানে নিয়ে যাবে', i: 'fa-headset', c: ['#25D366', '#128C7E'], f: [
+                { k: 'whatsapp_number', l: 'WhatsApp Number', tel: 1, h: 'যেমন 01XXXXXXXXX বা 8801XXXXXXXXX' },
+                { k: 'whatsapp_message', l: 'Default Message', ta: 2, h: 'ইউজার ক্লিক করলে এই মেসেজ লেখা থাকবে' },
+                { k: 'support_link', l: 'Support Link (fallback)', h: 'WhatsApp নম্বর না থাকলে এই লিংক খুলবে' } ] },
+            { t: 'Home Telegram Channel', s: 'হোম পেজের Telegram চ্যানেল বাটন', i: 'fab fa-telegram', c: ['#29b6f6', '#0288d1'], f: [
+                { k: 'telegram_channel', l: 'Telegram Channel Link', h: 'যেমন https://t.me/yourchannel বা @yourchannel' },
+                { k: 'telegram_title', l: 'Card Title', h: 'খালি রাখলে: আমাদের Telegram চ্যানেল' },
+                { k: 'telegram_subtitle', l: 'Card Subtitle', h: 'খালি রাখলে ডিফল্ট লেখা দেখাবে' } ] },
+            { t: 'Shop Page', s: 'শপ পেজের লেখা ও লিংক', i: 'fa-store', c: ['#ffa726', '#ef6c00'], f: [
+                { k: 'shop_link', l: 'Shop Link' }, { k: 'shop_image', l: 'Shop Banner Image URL', img: 1, h: 'খালি রাখলে ডিফল্ট ছবি থাকবে' }, { k: 'shop_title', l: 'Shop Title', h: 'Diamond Top-Up' },
+                { k: 'shop_subtitle', l: 'Shop Subtitle', ta: 2 }, { k: 'shop_button', l: 'Button Text' } ] },
+            { t: 'Developer Page', s: 'ডেভেলপার লোগো, লেখা, প্রাইস ও Telegram', i: 'fa-code', c: ['#5c6bc0', '#283593'], f: [
+                { k: 'developer_logo', l: 'Developer Logo URL', img: 1 }, { k: 'developer_name', l: 'Developer Name' },
+                { k: 'developer_title', l: 'Title', h: 'খালি রাখলে ডিফল্ট লেখা দেখাবে' },
+                { k: 'developer_desc', l: 'Description', ta: 3 },
+                { k: 'developer_price_label', l: 'Price Label', h: 'যেমন: 💰 শুরু মাত্র' },
+                { k: 'developer_price', l: 'Price Text', h: 'যেমন: ২৫,০০০ টাকা থেকে!' },
+                { k: 'developer_telegram', l: 'Telegram Link (Contact Button)', h: 'যেমন https://t.me/username বা @username' } ] },
+            { t: 'Refer & Earn', s: 'রেফার বোনাসের শর্ত', i: 'fa-gift', c: ['#ab47bc', '#6a1b9a'], f: [
+                { k: 'refer_min_deposit', l: 'Minimum Deposit (৳)', num: 1, h: 'ইউজারের Refer পেজের লেখায় দেখাবে (খালি রাখলে ১০০)' }, { k: 'refer_bonus', l: 'Referrer Bonus (৳)', num: 1, h: 'ইউজারের Refer পেজের লেখায় দেখাবে (খালি রাখলে ১০)' } ] },
+            { t: 'Email Notifications', s: 'ইউজারকে প্রফেশনাল ইমেইল পাঠান (EmailJS)', i: 'fa-envelope-open-text', c: ['#26c6da', '#00838f'], btn: ['Send Test Email', 'testMail'], f: [
+                { k: 'email_enabled', l: 'Enable Emails', bool: 1 }, { k: 'emailjs_service_id', l: 'EmailJS Service ID' },
+                { k: 'emailjs_template_id', l: 'EmailJS Template ID' }, { k: 'emailjs_public_key', l: 'EmailJS Public Key', h: 'email-template.html ফাইলটি EmailJS Template এ পেস্ট করুন। Save করার পর Test করুন।' } ] },
+            { t: 'Help Videos', s: 'ইউজারদের টিউটোরিয়াল ভিডিও', i: 'fa-circle-play', c: ['#ef5350', '#c62828'], f: [
+                { k: 'how_to_add_money_link', l: 'How to Add Money' }, { k: 'how_to_play_link', l: 'How to Join Match' }, { k: 'how_to_get_room_id_link', l: 'How to Get Room ID' } ] }
+        ];
+        function buildSettings() {
+            document.getElementById('settings-form').innerHTML = SET_GROUPS.map(g => `<div class="set-card"><div class="set-head" style="--c1:${g.c[0]};--c2:${g.c[1]}"><i class="${g.i.indexOf(' ') > -1 ? g.i : 'fas ' + g.i}"></i><div><b>${g.t}</b><small>${g.s}</small></div></div><div class="set-body">` +
+                g.f.map(f => {
+                    let inp;
+                    if (f.bool) inp = `<select id="s_${f.k}" class="form-input"><option value="true">Yes</option><option value="false">No</option></select>`;
+                    else if (f.ta) inp = `<textarea id="s_${f.k}" class="form-input" rows="${f.ta}"></textarea>`;
+                    else inp = `<input type="${f.num ? 'number' : 'text'}" ${f.tel ? 'inputmode="tel"' : ''} id="s_${f.k}" class="form-input">`;
+                    return `<div class="form-group"><label class="form-label">${f.l}</label>${inp}${f.h ? `<div class="hint">${f.h}</div>` : ''}${f.img ? `<img class="prev" id="p_${f.k}">` : ''}</div>`;
+                }).join('') + (g.btn ? `<button class="btn btn-primary" style="width:100%;margin-bottom:16px" onclick="${g.btn[1]}()"><i class="fas fa-envelope"></i> ${g.btn[0]}</button>` : '') + `</div></div>`).join('');
+            SET_GROUPS.forEach(g => g.f.filter(f => f.img).forEach(f => document.getElementById('s_' + f.k).addEventListener('input', e => setPrev(f.k, e.target.value))));
+        }
+        function setPrev(k, v) { const p = document.getElementById('p_' + k); if (!p) return; if (v) { p.src = v; p.style.display = 'block'; } else p.style.display = 'none'; }
+        function loadSettings() {
+            buildSettings();
+            let first = true;
+            onValue(ref(db, 'app_settings'), s => {
+                const d = s.val() || {};
+                appCfg = d;
+                if (!first && document.activeElement && document.activeElement.id && document.activeElement.id.startsWith('s_')) return; // don't overwrite while typing
+                first = false;
+                SET_GROUPS.forEach(g => g.f.forEach(f => {
+                    const el = document.getElementById('s_' + f.k); if (!el) return;
+                    el.value = f.bool ? String(d[f.k] === true || d[f.k] === 'true') : (d[f.k] == null ? '' : d[f.k]);
+                    if (f.img) setPrev(f.k, el.value);
+                }));
+            });
+        }
+        window.saveSettings = () => {
+            const data = {};
+            SET_GROUPS.forEach(g => g.f.forEach(f => {
+                const v = document.getElementById('s_' + f.k).value;
+                data[f.k] = f.bool ? v === 'true' : (f.num && v !== '' ? Number(v) : v.trim());
+            }));
+            update(ref(db, 'app_settings'), data);
+            Swal.fire({ icon: 'success', title: 'Settings Saved', showConfirmButton: false, timer: 1400 });
+        };
+
+        /* ---- USERS ---- */
+        function renderUsers(users) {
+            const list = document.getElementById('user-list');
+            if (!users.length) { list.innerHTML = '<div class="empty">No users</div>'; return; }
+            list.innerHTML = [...users].sort((a, b) => userTs(b) - userTs(a)).map(u => `
+            <div class="flat-card">
+                <div class="fc-header"><div class="fc-title">${esc(u.username || 'No Name')}</div><div class="fc-tag tag-blue">${userTs(u) ? new Date(userTs(u)).toLocaleDateString() : 'old'}</div></div>
+                <div class="fc-detail"><span>Email</span><span class="fc-value">${esc(u.email || '-')}</span></div>
+                <div class="fc-detail"><span>Phone</span><span class="fc-value">${esc(u.phone || '-')}</span></div>
+                <div class="fc-detail"><span>UID</span><span class="fc-value sel" style="font-size:11px">${esc(u.uid)}</span></div>
+                <div style="display:flex;gap:10px;margin-top:10px">
+                    <div style="flex:1;background:#e8f5e9;border-radius:14px;padding:10px;text-align:center"><div style="font-size:10px;font-weight:800;color:#2e7d32">DEPOSIT</div><div style="font-weight:800;color:#2e7d32">৳${u.deposit || 0}</div></div>
+                    <div style="flex:1;background:#fff3e0;border-radius:14px;padding:10px;text-align:center"><div style="font-size:10px;font-weight:800;color:#ef6c00">WINNING</div><div style="font-weight:800;color:#ef6c00">৳${u.winning || 0}</div></div>
+                </div>
+                <button class="btn btn-primary" style="width:100%;margin-top:12px" onclick="editUserBalance('${u.uid}', ${u.deposit || 0}, ${u.winning || 0})"><i class="fas fa-pen"></i> Edit Balance</button>
+            </div>`).join('');
+        }
+
+        /* ---- WITHDRAWALS ---- */
+        function loadWithdrawals() {
+            onValue(ref(db, 'transactions'), s => {
+                const d = s.val() || {};
+                allWd = [];
+                Object.keys(d).forEach(uid => Object.entries(d[uid]).forEach(([tid, t]) => {
+                    if (t.type === 'Withdraw') allWd.push({ uid, tid, ...t, amount: Number(t.amount) || 0, ts: t.ts || Date.parse(t.date) || 0 });
+                }));
+                allWd.sort((a, b) => b.ts - a.ts);
+                refreshCharts(); updateKpis();
+                const nameOf = uid => { const u = allUsers.find(x => x.uid === uid); return u ? (u.username || u.email) : uid; };
+                const pend = allWd.filter(x => x.status === 'Pending');
+                document.getElementById('withdraw-list').innerHTML = pend.length ? pend.map(p => `
+                <div class="flat-card" style="border-left:4px solid #ffa726">
+                    <div class="fc-header"><div class="fc-title" style="color:#ef6c00">৳${p.amount}</div><div class="fc-tag tag-yellow">Pending</div></div>
+                    <div class="fc-detail"><span>User</span><span class="fc-value">${esc(nameOf(p.uid))}</span></div>
+                    <div class="fc-detail"><span>Method</span><span class="fc-value">${esc(p.method)}</span></div>
+                    <div class="fc-detail"><span>Number</span><span class="fc-value sel">${esc(p.number)}</span></div>
+                    <div class="fc-detail"><span>Date</span><span class="fc-value">${esc(p.date)}</span></div>
+                    <div class="fc-actions">
+                        <button class="btn btn-success" onclick="handleWithdraw('${p.uid}','${p.tid}','approve',${p.amount})"><i class="fas fa-check"></i> Approve</button>
+                        <button class="btn btn-danger" onclick="handleWithdraw('${p.uid}','${p.tid}','reject',${p.amount})"><i class="fas fa-rotate-left"></i> Refund</button>
+                    </div></div>`).join('') : '<div class="empty">No Pending Withdrawals</div>';
+                const hist = allWd.filter(x => x.status !== 'Pending').slice(0, 15);
+                document.getElementById('withdraw-history').innerHTML = hist.length ? hist.map(p => `
+                <div class="pay-row"><div class="pay-amt" style="color:#ef6c00">৳${p.amount}</div><div class="pay-mid"><b>${esc(nameOf(p.uid))}</b>${esc(p.method + ' · ' + p.date)}</div><div class="fc-tag ${p.status === 'Success' ? 'tag-green' : 'tag-red'}">${p.status === 'Success' ? 'Paid' : 'Refunded'}</div></div>`).join('') : '<div class="empty">No history yet</div>';
+            });
+        }
+        window.handleWithdraw = async (uid, tid, action, amount) => {
+            const ok = await Swal.fire({ title: action === 'approve' ? 'Approve withdraw?' : 'Refund to user?', text: '৳' + amount, icon: 'question', showCancelButton: true, confirmButtonColor: action === 'approve' ? '#2e9d4f' : '#e53935' });
+            if (!ok.isConfirmed) return;
+            if (action === 'approve') {
+                await update(ref(db, `transactions/${uid}/${tid}`), { status: 'Success' });
+                { const u = allUsers.find(x => x.uid === uid); if (u) sendMail(u.email, u.username, 'Withdraw Approved', 'আপনার উইথড্র সফল হয়েছে ✅', 'আপনার উইথড্র রিকোয়েস্ট অ্যাপ্রুভ করা হয়েছে এবং টাকা পাঠানো হয়েছে।', [['Amount', '৳' + amount], ['Status', 'Paid']]); }
+                Swal.fire({ icon: 'success', title: 'Approved', showConfirmButton: false, timer: 1300 });
+            } else {
+                const snap = await get(ref(db, `users/${uid}`));
+                const user = snap.val();
+                if (!user) return Swal.fire('Error', 'User not found', 'error');
+                await update(ref(db, `users/${uid}`), { winning: (user.winning || 0) + amount });
+                await update(ref(db, `transactions/${uid}/${tid}`), { status: 'Rejected (Refunded)' });
+                sendMail(user.email, user.username, 'Withdraw Refunded', 'উইথড্র রিফান্ড করা হয়েছে', 'আপনার উইথড্র রিকোয়েস্ট সম্পন্ন করা যায়নি। টাকা আপনার Winning ওয়ালেটে ফেরত দেওয়া হয়েছে।', [['Refunded', '৳' + amount]]);
+                Swal.fire('Refunded', 'Money returned to user', 'info');
+            }
+        };
+
+        /* ---- MATCH RESULT ---- */
+        window.openResult = async (key) => {
+            const [ms, ps] = await Promise.all([get(ref(db, 'matches/' + key)), get(ref(db, 'match_participants/' + key))]);
+            const m = ms.val() || {}, d = ps.val();
+            if (!d) return Swal.fire('No participants', 'এই ম্যাচে এখনো কেউ জয়েন করেনি', 'info');
+            const rows = Object.entries(d).map(([id, p], i) => `<div class="rs-row"><div class="rs-n">${i + 1}. ${esc(p.ign)}</div><input class="rs-k" data-id="${id}" type="number" min="0" value="${p.kills || 0}"><input class="rs-w" data-id="${id}" type="number" min="0" value="${p.win || 0}"></div>`).join('');
+            const r = await Swal.fire({
+                title: 'Result · ' + esc(m.title || ''), width: 560, confirmButtonText: 'Save & Pay', confirmButtonColor: '#ef6c00', showCancelButton: true,
+                html: `<div class="rs-hint">Per kill ৳${m.per_kill || 0} · Prize ৳${m.total_prize || 0}</div><div class="rs-head"><span>Player</span><span>Kill</span><span>Win ৳</span></div><div class="rs-box">${rows}</div><label style="display:block;margin-top:12px;font-size:13px;font-weight:700;text-align:left"><input type="checkbox" id="rs-fin" checked> Match Finished হিসেবে মার্ক করুন</label>`,
+                preConfirm: () => ({ fin: document.getElementById('rs-fin').checked })
+            });
+            if (!r.isConfirmed) return;
+            Swal.fire({ title: 'Saving...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
+            for (const [id, p] of Object.entries(d)) {
+                const kills = parseInt(document.querySelector(`.rs-k[data-id="${id}"]`).value) || 0;
+                const win = parseInt(document.querySelector(`.rs-w[data-id="${id}"]`).value) || 0;
+                const delta = win - (p.paid_win || 0);
+                await update(ref(db, `match_participants/${key}/${id}`), { kills, win, paid_win: win });
+                if (delta !== 0 && p.joinedBy) {
+                    const us = await get(ref(db, 'users/' + p.joinedBy)), u = us.val();
+                    if (u) {
+                        await update(ref(db, 'users/' + p.joinedBy), { winning: Math.max(0, (u.winning || 0) + delta) });
+                        await push(ref(db, 'transactions/' + p.joinedBy), { type: 'Match Win', amount: delta, method: 'Wallet', status: 'Success', date: new Date().toLocaleString(), ts: Date.now() });
+                        if (delta > 0) sendMail(u.email, u.username, 'Prize Credited', 'অভিনন্দন! 🏆 প্রাইজ জমা হয়েছে', 'আপনার ম্যাচের প্রাইজ Winning ওয়ালেটে যোগ করা হয়েছে।', [['Match', m.title || ''], ['Kills', kills], ['Prize', '৳' + delta]]);
+                    }
+                }
+            }
+            if (r.value.fin) await update(ref(db, 'matches/' + key), { status: 'Finished' });
+            Swal.fire({ icon: 'success', title: 'Result Saved', text: 'Winning ব্যালেন্সে টাকা যোগ হয়েছে', timer: 1800, showConfirmButton: false });
+        };
+
+        /* ---- NOTIFICATIONS LIST ---- */
+        window.deleteNotif = (k) => remove(ref(db, 'notifications/' + k));
+        function loadNotifList() {
+            onValue(ref(db, 'notifications'), s => {
+                const d = s.val();
+                document.getElementById('notif-list').innerHTML = d ? Object.entries(d).reverse().map(([k, n]) => `<div class="flat-card"><div class="fc-header"><div class="fc-title">${esc(n.title)}</div><button class="btn btn-danger btn-sm" onclick="deleteNotif('${k}')"><i class="fas fa-trash"></i></button></div><div style="font-size:13px;color:#666;line-height:1.5">${esc(n.body)}</div><div style="font-size:10px;color:#aaa;margin-top:8px">${esc(n.time || '')}</div></div>`).join('') : '<div class="empty">No notifications sent</div>';
+            });
+        }
+        function loadLive() { onValue(ref(db, 'matches'), s => { const d = s.val() || {}; document.getElementById('k-live').innerText = Object.values(d).filter(m => m.status === 'Ongoing').length; }); }
+
+    </script>
+</body>
+</html>
