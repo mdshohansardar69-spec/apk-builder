@@ -1,4 +1,4 @@
-name: Build APK
+  name: Build APK
 on: workflow_dispatch
 permissions:
   contents: write
@@ -41,10 +41,25 @@ jobs:
           <content src="index.html"/><access origin="*"/><allow-navigation href="*"/><allow-intent href="*"/>
           <preference name="Orientation" value="${c.orientation==='auto'?'default':c.orientation}"/>
           <preference name="android-minSdkVersion" value="${c.minSdk}"/>
+          <preference name="AutoHideSplashScreen" value="true"/>
+          <preference name="AndroidWindowSplashScreenBackground" value="#020604"/>
           <platform name="android">${icon}${perms}</platform></widget>`);
           EOF
           node gen.js
           cordova platform add android@13
+          # Android 12+ splash: logo transparent, background dark, no animation
+          mkdir -p platforms/android/app/src/main/res/values-v31
+          cat > platforms/android/app/src/main/res/values-v31/splash_override.xml <<'XML'
+          <?xml version="1.0" encoding="utf-8"?>
+          <resources>
+            <style name="Theme.App.SplashScreen" parent="Theme.SplashScreen">
+              <item name="windowSplashScreenBackground">#020604</item>
+              <item name="windowSplashScreenAnimatedIcon">@android:color/transparent</item>
+              <item name="windowSplashScreenAnimationDuration">0</item>
+              <item name="postSplashScreenTheme">@style/Theme.AppCompat.NoActionBar</item>
+            </style>
+          </resources>
+          XML
           cordova build android --debug
           cp platforms/android/app/build/outputs/apk/debug/app-debug.apk "../$PKG-$VER.apk"
           cd ..
